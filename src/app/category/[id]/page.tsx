@@ -10,6 +10,11 @@ import { Section, type SectionData } from '@/components/Section/Section'
 import { ResourcesProps } from '@/components/Resources'
 import CategoryNav from '@/components/CategoryNav'
 
+type ItemNavigation = {
+  title: string
+  id: string
+}
+
 export default function CategoryRoute() {
   const id = useParams().id
 
@@ -24,8 +29,8 @@ export default function CategoryRoute() {
 
   const keys = Object.keys(data)
   const items = keys.map((k) => data[k as keyof typeof data])
-  let previous: any
-  let next: any
+  let previous = {} as ItemNavigation
+  let next = {} as ItemNavigation
 
   const item = items.find((item, index) => {
     const isFound = item.id === id
@@ -94,15 +99,17 @@ export default function CategoryRoute() {
             previousLabel={t('previous')}
             nextLabel={t('next')}
             next={
-              next
-                ? { text: next.title, url: `/category/${next.id}/` }
-                : { text: t('exportAction'), url: '/share/' }
+              (Object.values(next).length > 0 && {
+                text: next.title,
+                url: `/category/${next.id}/`,
+              }) || { text: t('exportAction'), url: '/share/' }
             }
             previous={
-              previous && {
+              (Object.values(previous).length > 0 && {
                 text: previous.title,
                 url: `/category/${previous.id}/`,
-              }
+              }) ||
+              undefined
             }
           />
         </div>
