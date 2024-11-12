@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { NextIntlClientProvider } from "next-intl";
-import React, { useCallback, useEffect } from "react";
-import { rendeMessage } from "./getMessages";
+import { NextIntlClientProvider } from 'next-intl'
+import React, { useCallback, useEffect } from 'react'
+import { rendeMessage } from './getMessages'
 
-const LOCAL_STORAGE_CONFIG_KEY = "desyscheck-config";
+const LOCAL_STORAGE_CONFIG_KEY = 'desyscheck-config'
 
 // import enMessages from "../translations/en";
 // import ptMessages from "../translations/pt";
@@ -16,50 +16,52 @@ const LOCAL_STORAGE_CONFIG_KEY = "desyscheck-config";
 
 const IntlClientContext = React.createContext(
   {} as {
-    locale: string;
-    onLanguageChange: (locale: string) => void;
-  },
-);
+    locale: string
+    onLanguageChange: (locale: string) => void
+  }
+)
 
 type IntlClientProviderProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export const IntlClientProvider = (props: IntlClientProviderProps) => {
-  const { children } = props;
+  const { children } = props
 
-  const [locale, setLocale] = React.useState("en");
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [messagesMap, setMessagesMap] = React.useState({});
+  const [locale, setLocale] = React.useState('en')
+  const [isLoading, setIsLoading] = React.useState(true)
+  const [messagesMap, setMessagesMap] = React.useState({})
 
   const onLanguageChange = (locale: string) => {
-    setLocale(locale);
+    setLocale(locale)
 
-    const value = JSON.stringify({ locale });
-    localStorage.setItem(LOCAL_STORAGE_CONFIG_KEY, value);
-  };
+    const value = JSON.stringify({ locale })
+    localStorage.setItem(LOCAL_STORAGE_CONFIG_KEY, value)
+
+    document.documentElement.lang = locale
+  }
 
   useEffect(() => {
     rendeMessage(locale)
       .then((m) => {
-        setMessagesMap(m);
+        setMessagesMap(m)
       })
       .finally(() => {
-        setIsLoading(false);
-      });
-  }, [locale]);
+        setIsLoading(false)
+      })
+  }, [locale])
 
   useEffect(() => {
-    const data = localStorage.getItem(LOCAL_STORAGE_CONFIG_KEY);
+    const data = localStorage.getItem(LOCAL_STORAGE_CONFIG_KEY)
 
     if (!data) {
-      onLanguageChange("en");
-      return;
+      onLanguageChange('en')
+      return
     }
 
-    const _jsonData = JSON.parse(data);
-    onLanguageChange(_jsonData?.locale || "en");
-  }, []);
+    const _jsonData = JSON.parse(data)
+    onLanguageChange(_jsonData?.locale || 'en')
+  }, [])
 
   return (
     <IntlClientContext.Provider value={{ onLanguageChange, locale }}>
@@ -69,15 +71,15 @@ export const IntlClientProvider = (props: IntlClientProviderProps) => {
         </NextIntlClientProvider>
       )}
     </IntlClientContext.Provider>
-  );
-};
+  )
+}
 
 export const useIntlClientState = () => {
-  const { locale } = React.useContext(IntlClientContext);
-  return { locale };
-};
+  const { locale } = React.useContext(IntlClientContext)
+  return { locale }
+}
 
 export const useIntlClientAction = () => {
-  const { onLanguageChange } = React.useContext(IntlClientContext);
-  return { onLanguageChange };
-};
+  const { onLanguageChange } = React.useContext(IntlClientContext)
+  return { onLanguageChange }
+}
