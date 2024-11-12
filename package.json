@@ -17,7 +17,9 @@
   "scripts": {
     "dev": "next dev --port 3031",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
+    "lint:fix": "eslint --fix src & prettier --write src"
   },
   "browserslist": {
     "production": [
@@ -32,12 +34,20 @@
     ]
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^15.0.3",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "22.9.0",
     "@types/react": "18.3.12",
     "@types/react-transition-group": "^4.4.11",
-    "eslint": "9.14.0",
-    "eslint-config-next": "15.0.3",
-    "prettier": "3.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "eslint": "^9.14.0",
+    "eslint-config-next": "^15.0.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "prettier": "^3.3.3",
     "typescript": "5.6.3"
   }
 }

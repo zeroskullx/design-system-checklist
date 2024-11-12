@@ -1,55 +1,53 @@
 'use client'
 
-import React, { useState, useCallback, MouseEvent, ChangeEvent } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
-import classnames from "classnames";
+import React, { useState, useCallback, MouseEvent, ChangeEvent } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import classnames from 'classnames'
 
-import s from "./Header.module.css";
-import { useIntlClientAction, useIntlClientState } from "@/translations/intlClientContext";
-
+import s from './Header.module.css'
+import {
+  useIntlClientAction,
+  useIntlClientState,
+} from '@/translations/intlClientContext'
 
 const Header: React.FC = () => {
-  const router = useRouter();
-  const [active, setActive] = useState<boolean>(false);
-  const navClassName = classnames(s.nav, active && s["active"]);
-  const burgerClassName = classnames(s.burger, active && s["active"]);
-
-
+  const router = useRouter()
+  const [active, setActive] = useState<boolean>(false)
+  const navClassName = classnames(s.nav, active && s['active'])
+  const burgerClassName = classnames(s.burger, active && s['active'])
 
   //i18n
   const { onLanguageChange } = useIntlClientAction()
   const { locale } = useIntlClientState()
   //const locale = useLocale();
-  const t = useTranslations('core');
-
+  const t = useTranslations('core')
 
   //console.log(locale);
 
-
   const toggleMenu = useCallback((flag?: boolean) => {
     setActive((prev) => {
-      const nextActive = flag === undefined ? !prev : flag;
-      document.body.style.overflow = nextActive ? "hidden" : "auto";
-      return nextActive;
-    });
-  }, []);
+      const nextActive = flag === undefined ? !prev : flag
+      document.body.style.overflow = nextActive ? 'hidden' : 'auto'
+      return nextActive
+    })
+  }, [])
 
-  const closeMenu = useCallback(() => toggleMenu(false), []);
+  const closeMenu = useCallback(() => toggleMenu(false), [])
 
   const navigate = (e: MouseEvent<HTMLAnchorElement>, to: string) => {
-    e.preventDefault();
-    closeMenu();
-    router.push(to);
-  };
+    e.preventDefault()
+    closeMenu()
+    router.push(to)
+  }
 
   const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    closeMenu();
+    closeMenu()
     //router.push(router.basePath, router.asPath, { locale: e.target.value });
 
-    onLanguageChange(e.target.value);
-  };
+    onLanguageChange(e.target.value)
+  }
 
   return (
     <header className={s.container}>
@@ -62,12 +60,12 @@ const Header: React.FC = () => {
       <nav className={navClassName}>
         <ul className={s.menu}>
           <li className={s.item}>
-            <a href="/about" onClick={(e) => navigate(e, "/about")}>
+            <a href="/about" onClick={(e) => navigate(e, '/about')}>
               {t('about')}
             </a>
           </li>
           <li className={s.item}>
-            <a href="/share" onClick={(e) => navigate(e, "/share")}>
+            <a href="/share" onClick={(e) => navigate(e, '/share')}>
               {t('share')}
             </a>
           </li>
@@ -113,7 +111,7 @@ const Header: React.FC = () => {
         <span className={s.line} />
       </button>
     </header>
-  );
-};
+  )
+}
 
-export { Header };
+export { Header }
