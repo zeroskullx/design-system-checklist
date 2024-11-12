@@ -1,18 +1,11 @@
 'use client'
 
+import React, { useEffect } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
-import React, { useCallback, useEffect } from 'react'
+
 import { rendeMessage } from './getMessages'
 
 const LOCAL_STORAGE_CONFIG_KEY = 'desyscheck-config'
-
-// import enMessages from "../translations/en";
-// import ptMessages from "../translations/pt";
-
-// const messagesMap = {
-//   en: enMessages,
-//   pt: ptMessages,
-// };
 
 const IntlClientContext = React.createContext(
   {} as {
@@ -33,12 +26,11 @@ export const IntlClientProvider = (props: IntlClientProviderProps) => {
   const [messagesMap, setMessagesMap] = React.useState({})
 
   const onLanguageChange = (locale: string) => {
-    setLocale(locale)
-
     const value = JSON.stringify({ locale })
     localStorage.setItem(LOCAL_STORAGE_CONFIG_KEY, value)
 
     document.documentElement.lang = locale
+    setLocale(locale)
   }
 
   useEffect(() => {
