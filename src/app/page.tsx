@@ -2,9 +2,10 @@
 
 import { Layout } from "@/components/Layout";
 import Link from "next/link";
-import s from "./page.module.css";
-import datas, { Data } from "@/data";
 import { useTranslations } from "next-intl";
+
+import s from "./page.module.css";
+import datas from "@/data";
 import { Hero } from "@/components/Hero";
 import { Button } from "@/components/Button";
 import { useCheckedIds } from "@/utilities/checklistsContext";
@@ -37,8 +38,6 @@ export default function Home() {
     });
 
     const comp = translation[item.id as keyof typeof translation];
-
-    console.log("total", item.id);
 
     return (
       <Link key={item.id} className={s.listItem} href={`/category/${item.id}/`}>

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useCheckItem } from '../../utilities/checklistsContext';
 import s from './ChecklistItem.module.css';
 
-const ChecklistItem = ({ title, description, id }) => {
+type ChecklistItemProps = {
+  title: string;
+  description: string;
+  id: string;
+}
+
+const ChecklistItem = ({ title, description, id }: ChecklistItemProps) => {
   const { add, remove, checked } = useCheckItem(id);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
 
     if (checked) add(id);

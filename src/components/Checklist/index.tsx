@@ -1,6 +1,7 @@
 import React from 'react';
-import ChecklistItem from '../ChecklistItem';
+
 import s from './Checklist.module.css';
+import ChecklistItem from '../ChecklistItem';
 
 export interface ChecklistProps {
   id: string;
