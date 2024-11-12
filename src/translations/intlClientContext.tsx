@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 
 import { rendeMessage } from './getMessages'
@@ -25,23 +25,21 @@ export const IntlClientProvider = (props: IntlClientProviderProps) => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [messagesMap, setMessagesMap] = React.useState({})
 
-  const onLanguageChange = (locale: string) => {
+  const onLanguageChange = useCallback((locale: string) => {
     const value = JSON.stringify({ locale })
     localStorage.setItem(LOCAL_STORAGE_CONFIG_KEY, value)
 
     document.documentElement.lang = locale
-    setLocale(locale)
-  }
 
-  useEffect(() => {
     rendeMessage(locale)
       .then((m) => {
         setMessagesMap(m)
       })
       .finally(() => {
         setIsLoading(false)
+        setLocale(locale)
       })
-  }, [locale])
+  }, [])
 
   useEffect(() => {
     const data = localStorage.getItem(LOCAL_STORAGE_CONFIG_KEY)
@@ -53,7 +51,7 @@ export const IntlClientProvider = (props: IntlClientProviderProps) => {
 
     const _jsonData = JSON.parse(data)
     onLanguageChange(_jsonData?.locale || 'en')
-  }, [])
+  }, [onLanguageChange])
 
   return (
     <IntlClientContext.Provider value={{ onLanguageChange, locale }}>
