@@ -1,6 +1,6 @@
 {
   "name": "design-system-checklist",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "homepage": "https://designsystemchecklist.com/",
   "private": true,
   "dependencies": {
