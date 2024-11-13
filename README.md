@@ -17,7 +17,7 @@ If you have any information to add to existing sections, please open a pull requ
 ### Running locally
 
 ```
-$ git clone git@github.com:ardakaracizmeli/design-system-checklist.git
+$ git clone https://github.com/zeroskullx/design-system-checklist.git
 $ cd design-system-checklist
 $ yarn
 $ yarn dev
