@@ -23,12 +23,6 @@ $ yarn
 $ yarn dev
 ```
 
-Você pode adicionar o seguinte comentário para explicar o uso da porta no README:
-
-### Port Configuration
-
-The development server is set to run on port `3031` by default, as specified in the `dev` script (`next dev --port 3031`). This allows for flexibility in local environments that may already be using the default port `3000`. If `3031` is unavailable, you can modify the script to use an alternate port.
-
 ### Feedback
 
 Feel free to open github issues or you can reach us directly at:
